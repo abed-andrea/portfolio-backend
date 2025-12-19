@@ -9,14 +9,13 @@ Backend for my portfolio project.
 - Implemented a simple `/hello` GET endpoint
 - Ran the backend locally using Uvicorn
 - Tested the endpoint successfully using Postman
+- Containerized the backend using Docker and Docker Compose
 
-## How to Setup & Run Locally 
+## How to Run with Docker
+Make sure Docker Desktop is running.
+
 ```bash
 git clone <repo-url>
 cd portfolio-backend
 
-python -m venv venv
-source venv/bin/activate
-
-pip install -r requirements.txt
-uvicorn app.main:app --reload
+docker compose up --build
