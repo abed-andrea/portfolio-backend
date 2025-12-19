@@ -1,5 +1,11 @@
+# docker-compose.yml tells Docker how to run containers together
 services:
+  # This service is the FastAPI backend
   fast-api:
+    # Build the container using the Dockerfile in the current folder
     build: .
+    
+    # Connect port 8000 on my laptop to port 8000 inside the container
+    # So when I go to localhost:8000, I’m actually talking to the container
     ports:
       - "8000:8000"
