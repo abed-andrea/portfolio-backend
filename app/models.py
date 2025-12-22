@@ -15,4 +15,4 @@ class ContactMessage(Base):
     name: Mapped[str] = mapped_column(String(100))
     email: Mapped[str] = mapped_column(String(255))
     message: Mapped[str] = mapped_column(Text())
-    create_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
