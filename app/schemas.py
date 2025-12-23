@@ -1,21 +1,18 @@
-# BaseModel is base class for all schemas (aka "This class defines validated input/output data"), EmailStr is special type provided by Pydantic
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
 
-# defines what the client is allowed to send to your API
+
 class ContactMessageCreate(BaseModel):
     name: str
     email: EmailStr
     message: str
 
-# for output/response... inherits from ContactMessageCreate because output includes everything the user sent PLUS extra fields added by the server 
-# DB generates the id, the client does not send it but the client should recieve it
+
 class ContactMessageResponse(ContactMessageCreate):
     id: int 
     created_at: datetime
 
-    # tells pydantic that you will recieve SQLAlchemy objects, not dictionaries
-    # without this, FastAPI cannot convert ORM objects to JSON
+    # Allow Pydantic to read fields from SQLAlchemy model attributes
     class Config:
         from_attributes = True
 

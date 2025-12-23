@@ -1,12 +1,8 @@
-# docker-compose.yml tells Docker how to run containers together
 services:
-  # This service is the FastAPI backend
   fast-api:
     # Build the container using the Dockerfile in the current folder
     build: .
     
-    # Connect port 8000 on my laptop to port 8000 inside the container
-    # So when I go to localhost:8000, I’m actually talking to the container
     ports:
       - "8000:8000"
 
@@ -15,21 +11,14 @@ services:
         condition: service_healthy
   
 
-  # This service is the Postgres database
   db:
-    # Use the official image from Docker Hub
     image: postgres:16
 
-    # Environment variables used by the Postgres image to initialize the database
-    # These values come from the .env file
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
 
-    # Expose Postgres on port 5432
-    # This lets me connect to the database from my laptop (ex: psql)
-    # Inside Docker, other containers can reach this database using the service name "db"
     ports:
       - "5432:5432"
 
