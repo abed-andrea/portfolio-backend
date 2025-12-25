@@ -1,11 +1,29 @@
-# docker-compose.yml tells Docker how to run containers together
 services:
-  # This service is the FastAPI backend
   fast-api:
     # Build the container using the Dockerfile in the current folder
     build: .
     
-    # Connect port 8000 on my laptop to port 8000 inside the container
-    # So when I go to localhost:8000, I’m actually talking to the container
     ports:
       - "8000:8000"
+
+    depends_on:
+      db:
+        condition: service_healthy
+  
+
+  db:
+    image: postgres:16
+
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+
+    ports:
+      - "5432:5432"
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
