@@ -5,12 +5,26 @@ from app.db import Base, engine, get_db
 from app.models import ContactMessage
 from app.schemas import ContactMessageCreate, ContactMessageResponse
 
+from fastapi.middleware.cors import CORSMiddleware
+
+
 
 # Create tables on startup
 Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI()
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
+
+
 
 
 @app.get("/hello")
